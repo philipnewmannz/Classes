@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Help</title>
+<title>Help documents for Classes</title>
 </head>
 <h1>Database.php</h1>
 <p>Basic Class used for making database connections.</p>
