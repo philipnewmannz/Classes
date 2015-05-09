@@ -84,7 +84,7 @@
 				}
 				
 			// lets get the rows if it's a select.	
-				if (preg_match("/SELECT/i",$sql)) {
+				if (preg_match("/^select (.*)/i",trim($sql)) > 0) {
 					if ($this->_queries['row_count'] >= '1') {
 					// get rows only if we find a select statement.
 						while($row = $result->fetch_array(MYSQLI_ASSOC)) {
