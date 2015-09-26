@@ -4,7 +4,7 @@
 # ---------------------------------------------------- #
 # DEVELOPER: PHILIP J. NEWMAN  (Primal Media Limited)  #
 # ---------------------------------------------------- #
-# VERSION 0.0.7							     	  	   #
+# VERSION 0.0.8							     	  	   #
 # ---------------------------------------------------- #
 
 # THIS CLASS PROVIDES METHODS FOR SELECT, INSERT AND UPDATE
@@ -12,10 +12,11 @@
 # SHOULD HAVE THE 'DELETED' FIELD UPDATED WITH '1'
 # SCRIPT (c) PRIMAL MEDIA LIMITED
 
+# 0.0.8 - Added __construct to allow use with more than one database. 
+# 0.0.8	- Updated reg_match("/^select (.*)/i",trim($sql) to make sure it's SELECT is at the start.
 # 0.0.7	- Removed if (empty from around row count within sql.
 # 0.0.6	- Added method mysql_EscapeString() for escaping stings easy.
 # 0.0.5 - Updated the error method in mysql_Query() to display error.
-
 
 	class Database {
 		
@@ -30,15 +31,39 @@
 		public $mysqli;
 		
 		public $result;
+
 		
-		/**
+	   /**
+	   	* Make sure we have the construct relay the login details.
+	   	*
+	   	* @param String 
+	   	*/
+		
+		function __construct($input_data=array()) {
+		// lets make sure we have the right details.
+		   	if (defined('MYSQL_SERVER')) { $this->mysql_Server = MYSQL_SERVER; } // END if
+			if (defined('MYSQL_LOGIN')) { $this->mysql_Login = MYSQL_LOGIN;	} // END if
+			if (defined('MYSQL_PASSWORD')) { $this->mysql_Password = MYSQL_PASSWORD;	} // END if
+			if (defined('MYSQL_DATABASE')) { $this->mysql_Database = MYSQL_DATABASE;	} // END if
+		   	
+			if (!empty($input_data)) {
+		   	// update the items that are in the incoming array.
+		   		if (isset($input_data['server'])) { $this->mysql_Server = $input_data['server']; } // END if
+				if (isset($input_data['login'])) { $this->mysql_Login = $input_data['login']; } // END if
+				if (isset($input_data['password'])) { $this->mysql_Password = $input_data['password']; } // END if
+				if (isset($input_data['database'])) { $this->mysql_Database = $input_data['database']; } // END if
+		   	} // END if
+	   	
+		} // END __construct
+		
+	   /**
 	   	* Make a connection to the database.
 	   	*
 	   	* @param String 
 	   	*/
 
 		public function mysql_Connect () {
-			$this->mysqli = @new mysqli(MYSQL_SERVER, MYSQL_LOGIN, MYSQL_PASSWORD, MYSQL_DATABASE);
+			$this->mysqli = @new mysqli($this->mysql_Server,$this->mysql_Login, $this->mysql_Password, $this->mysql_Database);
 			if ($this->mysqli->connect_errno) {
 				die ("Failed to connect to MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error);
 			}
