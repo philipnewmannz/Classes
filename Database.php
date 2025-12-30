@@ -54,17 +54,18 @@ class Database {
     }
 
     public function mysql_Connect() {
-        // Singleton-style connection: don't reconnect if already connected
-        if ($this->mysqli instanceof mysqli && $this->mysqli->ping()) {
+        // Check if the connection object exists and the connection is still alive
+        // We replace ping() with a check on the thread_id
+        if ($this->mysqli instanceof mysqli && !empty($this->mysqli->thread_id)) {
             return $this->mysqli;
         }
-
+    
         $this->mysqli = @new mysqli($this->mysql_Server, $this->mysql_Login, $this->mysql_Password, $this->mysql_Database);
         
         if ($this->mysqli->connect_errno) {
             die("Failed to connect to MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error);
         }
-
+    
         $this->mysqli->set_charset("utf8mb4");
         $this->status = true;
         return $this->mysqli;
