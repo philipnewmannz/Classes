@@ -4,7 +4,7 @@
 # ---------------------------------------------------- #
 # DEVELOPER: PHILIP J. NEWMAN  (Primal Media Limited)  #
 # ---------------------------------------------------- #
-# VERSION 0.1.3		  					     	  	   #
+# VERSION 0.1.4		  					     	  	   #
 # ---------------------------------------------------- #
 
 # THIS CLASS PROVIDES METHODS FOR SELECT, INSERT AND UPDATE
@@ -12,6 +12,7 @@
 # SHOULD HAVE THE 'DELETED' FIELD UPDATED WITH '1'
 # SCRIPT (c) PRIMAL MEDIA LIMITED
 
+# 0.1.4 - Updated a number of comments.
 # 0.1.3 - Added mysql_Prepare() and mysql_PrepareQuery
 # 0.1.2 - Decleared all the vers that will be used in the future.  
 #       - Now using the _set() to set dynamic vers.
